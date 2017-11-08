@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const lineReader = require('line-reader');
-const MarkdownIt = require('markdown-it');
+const md = require('markdown-it')();
 const path = require('path');
 
 const rootDir = 'C:\\Users\\bennyn\\Dropbox (Privat)\\Devugees\\course-outline';
@@ -41,22 +41,10 @@ function renderFileContents(file) {
           line = `**${line}`;
           line += '** ';
         }
-        // Title without links
-        contents += line + ' <ul>';
       }
-      else if (line.startsWith('- ')) {
-        // List item
-        contents += `<li>${line.substr('- '.length)}</li>`;
-      }
-      else if (line.length === 0) {
-        // Blank line
-        contents += '</ul> ';
-      }
-      else {
-        contents += line + '\r\n';
-      }
+      contents += line + '\r\n';
       if (last) {
-        resolve(contents);
+        resolve(md.render(contents).replace(/(\r\n|\n|\r)/gm, ''));
       }
     });
   });
@@ -100,7 +88,7 @@ async function run() {
       
       const exercises = day.replace('.md', '_.md');
       if (fs.existsSync(exercises)) {
-        output += ' | ' + await renderFileContents(exercises);
+        output += ' | ' + await renderFileContents(exercises) + '\r\n';
       } else {
         output += ` | \r\n`;
       }
