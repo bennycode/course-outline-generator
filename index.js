@@ -61,7 +61,7 @@ function promiseTest() {
 async function run() {
   const sections = await courseContent();
   let courseDay = 0;
-  let output = '<!-- TITLE: Curriculum Course Contents -->\r\n<!-- SUBTITLE: Course Outline -->\r\n\r\n';
+  let output = '<!-- TITLE: Curriculum Outline -->\r\n<!-- SUBTITLE: Course contents -->\r\n\r\n';
   for (section of sections) {
     if (section.length === 0) {
       continue;
@@ -74,8 +74,8 @@ async function run() {
     output += `:---:|:---|:---|:---\r\n`;
     
     for (day of section) {
-      let categoryName = day.substr(day.lastIndexOf(' - ') + ' - '.length);
-      categoryName = path.basename(categoryName, '.md');
+      let categoryName =path.basename(day, '.md');
+      categoryName = categoryName.substr(categoryName.indexOf(' - ') + ' - '.length);
       
       if (categoryName.endsWith('_')) {
         continue;
