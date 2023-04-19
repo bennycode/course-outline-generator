@@ -13,6 +13,6 @@
   "dependencies": {
     "fs-extra": "4.0.2",
     "line-reader": "0.4.0",
-    "markdown-it": "8.4.0"
+    "markdown-it": "12.3.2"
   }
 }
